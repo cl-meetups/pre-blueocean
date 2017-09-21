@@ -8,8 +8,22 @@ pipeline {
     }
     stage('Shell') {
       steps {
-        sh '/usr/games/fortune'
-        sh 'date --rfc-2822'
+        parallel(
+          "Shell": {
+            sh '/usr/games/fortune'
+            sh 'date --rfc-2822'
+            
+          },
+          "Sleep": {
+            sleep 10
+            
+          }
+        )
+      }
+    }
+    stage('End') {
+      steps {
+        echo 'Acabou'
       }
     }
   }
